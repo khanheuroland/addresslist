@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-const Person = ({ person }) => {
+const Person = ({ navigation, person, removePerson }) => {
   return (
     <>
       <View
@@ -14,18 +14,27 @@ const Person = ({ person }) => {
           width: "100%",
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Image
-            source={{ uri: person.avatar }}
-            style={{ width: 50, height: 50, borderRadius: 25 }}
-          />
-          <View style={{ marginLeft: 10 }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-              {person.first_name} {person.last_name}
-            </Text>
-            <Text>{person.email}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Detail", {
+              data: person,
+              removePerson: removePerson,
+            });
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Image
+              source={{ uri: person.avatar }}
+              style={{ width: 50, height: 50, borderRadius: 25 }}
+            />
+            <View style={{ marginLeft: 10 }}>
+              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+                {person.first_name} {person.last_name}
+              </Text>
+              <Text>{person.email}</Text>
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
         <Entypo name="chevron-right" size={20}></Entypo>
       </View>
       <View
