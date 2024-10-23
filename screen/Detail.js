@@ -1,24 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text, Image, Button, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { AppContext } from "../App";
 const Detail = ({ navigation, route }) => {
-  const { data, removePerson } = route.params;
+  const { data } = route.params;
+  const {persons, setPersons} =useContext(AppContext);
 
   useEffect(() => {
     console.log(data);
-
+    
     navigation.setOptions({
       title: `${data.first_name} ${data.last_name}`,
       headerRight: () => (
         <TouchableOpacity
           onPress={() => {
-            removePerson(data.id);
+            //TODO: Delete Person
+            let newList = persons.filter(p=>p.id!=data.id);
+            setPersons(newList);
             navigation.goBack();
           }}
           style={{ paddingRight: 15 }}
         >
-          <Text style={{ color: "red", fontSize: 17 }}>Delete</Text>
+          {/* <Text style={{ color: "red", fontSize: 17 }}>Delete</Text> */}
+          <Ionicons name="ellipsis-vertical-outline" size={24} color="red"></Ionicons>
         </TouchableOpacity>
       ),
     });

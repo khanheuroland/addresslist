@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
 import Person from '../components/person'
+import { AppContext } from "../App";
 
 const styles = StyleSheet.create({
   container: {
@@ -13,17 +14,24 @@ const styles = StyleSheet.create({
 const personData = require("../assets/data/persons.json")
 
 const ListPerson = ({navigation}) => {
-  const [data, setData] = useState(personData);
-  const removePerson =(id)=>{
-    let newList = data.filter(p=>p.id!=id);
-    setData(newList);
-  }
+  const {persons, setPersons} = useContext(AppContext);
+  useEffect(()=>{
+    navigation.setOptions({
+      title: 'New Home',
+      headerTintColor: 'yellow',
+      headerStyle: {
+        backgroundColor: 'green',
+      }
+    })
+    setPersons(personData);
+  },[]);
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={data}
+        data={persons}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Person removePerson = {removePerson} navigation={navigation} person={item} />}
+        renderItem={({ item }) => <Person navigation={navigation} person={item} />}
       />
     </View>
   );

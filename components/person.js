@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-const Person = ({ navigation, person, removePerson }) => {
+const Person = ({ navigation, person }) => {
   return (
     <>
       <View
@@ -17,8 +17,7 @@ const Person = ({ navigation, person, removePerson }) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Detail", {
-              data: person,
-              removePerson: removePerson,
+              data: person
             });
           }}
         >
